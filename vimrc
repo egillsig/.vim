@@ -1,4 +1,27 @@
-call pathogen#infect()
+" Vundle initialization
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+" original repos on github
+Bundle 'kien/ctrlp'
+Bundle 'scrooloose/syntastic'
+Bundle 'Valloric/YouCompleteMe'
+
+" Github repos of the user 'vim-scripts'
+" => can omit the username part
+
+
+" non github repos
+
+
+filetype plugin indent on     " required!
 
 "tab settings
 set tabstop=4
