@@ -10,7 +10,7 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 " original repos on github
-Bundle 'kien/ctrlp'
+Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'Valloric/YouCompleteMe'
 
