@@ -10,12 +10,20 @@ Bundle 'gmarik/vundle'
 
 " My Bundles here:
 " original repos on github
+Bundle 'derekwyatt/vim-scala'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
-Bundle 'Valloric/YouCompleteMe'
+" Bundle 'Valloric/YouCompleteMe'
+Bundle 'jpalardy/vim-slime'
+
+" snippets
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
+
 
 " Github repos of the user 'vim-scripts'
 " => can omit the username part
+Bundle 'AutomaticLaTeXPlugin'
 
 
 " non github repos
@@ -24,7 +32,6 @@ Bundle 'Valloric/YouCompleteMe'
 filetype plugin indent on     " required!
 
 "tab settings
-set tabstop=4
 set expandtab
 set softtabstop=4
 set shiftwidth=4
@@ -72,11 +79,14 @@ imap <C-p> <ESC>:CtrlP<CR>
 imap <C-w> <Esc><C-w> " move through windows in insert mode
 imap <C-v> <Esc><C-v> " allow block selection in insert mode
 
+noremap K i<CR><Esc> " Split line
+
 "  " Stupid shift key fixes
 cmap WQ wq
 cmap Wq wq
 
 imap jk <Esc>
+vmap <CR> <Esc>
 
 " IDE like curly braces
 inoremap {<cr> {<cr>}<c-o>O
@@ -86,3 +96,40 @@ inoremap {<cr> {<cr>}<c-o>O
 let g:Tex_DefaultTargetFormat='pdf'
 
 let g:slime_target = "tmux"
+
+
+" http://stackoverflow.com/questions/14896327/ultisnips-and-youcompleteme
+"
+" UltiSnips completion function that tries to expand a snippet. If there's no
+" snippet for expanding, it checks for completion window and if it's
+" shown, selects first element. If there's no completion window it tries to
+" jump to next placeholder. If there's no placeholder it just returns TAB key 
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+" this mapping Enter key to <C-y> to chose the current highlight item 
+" and close the selection list, same as other IDEs.
+" CONFLICT with some plugins like tpope/Endwise
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+autocmd FileType scheme setlocal shiftwidth=2 softtabstop=2
+autocmd FileType tex setlocal shiftwidth=2 softtabstop=2
+let g:syntastic_scala_checkers = ['']
+
+"This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
