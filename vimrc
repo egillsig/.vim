@@ -15,6 +15,8 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
 " Bundle 'Valloric/YouCompleteMe'
 Bundle 'jpalardy/vim-slime'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
 
 " snippets
 Bundle 'SirVer/ultisnips'
@@ -133,3 +135,7 @@ let g:syntastic_scala_checkers = ['']
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
+
+augroup filetypedetect
+    au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
+augroup END
