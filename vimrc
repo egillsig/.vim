@@ -17,6 +17,12 @@ Bundle 'scrooloose/syntastic'
 Bundle 'jpalardy/vim-slime'
 Bundle 'xolox/vim-misc'
 Bundle 'xolox/vim-notes'
+Bundle 'altercation/vim-colors-solarized'
+Plugin 'jelera/vim-javascript-syntax'
+
+" Clojure
+Bundle 'tpope/vim-fireplace'
+Bundle 'guns/vim-clojure-static'
 
 " snippets
 Bundle 'SirVer/ultisnips'
@@ -39,7 +45,13 @@ set softtabstop=4
 set shiftwidth=4
 set backspace=indent,eol,start
 
-"colorscheme koehler
+" Show tab characters
+set listchars=tab:>-,trail:~,extends:>,precedes:<
+set list
+
+syntax enable
+set background=dark
+" colorscheme solarized
 
 "highlight searching
 set hlsearch
@@ -81,7 +93,7 @@ imap <C-p> <ESC>:CtrlP<CR>
 imap <C-w> <Esc><C-w> " move through windows in insert mode
 imap <C-v> <Esc><C-v> " allow block selection in insert mode
 
-noremap K i<CR><Esc> " Split line
+" noremap K i<CR><Esc> " Split line
 
 "  " Stupid shift key fixes
 cmap WQ wq
@@ -131,7 +143,10 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 autocmd FileType scheme setlocal shiftwidth=2 softtabstop=2
 autocmd FileType tex setlocal shiftwidth=2 softtabstop=2
+autocmd FileType sml setlocal shiftwidth=2 softtabstop=2
+autocmd FileType html setlocal shiftwidth=2 softtabstop=2
 let g:syntastic_scala_checkers = ['']
+let g:syntastc_disabled_filetypes=['java']
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
@@ -139,3 +154,9 @@ nnoremap <CR> :noh<CR><CR>
 augroup filetypedetect
     au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
 augroup END
+
+augroup filetypedetect
+    au! BufRead,BufNewFile *.decaf setfiletype java
+augroup END
+
+au Filetype clojure nmap <c-c><c-k> :Require<cr>  
